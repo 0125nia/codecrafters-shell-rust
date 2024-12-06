@@ -1,5 +1,6 @@
-#[allow(unused_imports)]
 use std::io::{self, Write};
+
+use codecrafters_shell::CmdLine;
 
 fn main() {
     // Wait for user input
@@ -8,14 +9,13 @@ fn main() {
 
     loop {
         initial_display();
-        stdin.read_line(&mut input).unwrap();
-        match input.trim().to_lowercase().as_str() {
-            "exit 0" => break,
-            "exit" => break,
-            _ => println!("{}: command not found", input.trim()),
-        }
-
         input.clear();
+        stdin.read_line(&mut input).unwrap();
+
+        CmdLine::build(input.as_str()).and_then(|cmd_line| {
+            cmd_line.execute();
+            Some(())
+        });
     }
 }
 
