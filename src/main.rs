@@ -9,7 +9,7 @@ fn main() {
     loop {
         initial_display();
         stdin.read_line(&mut input).unwrap();
-        input.pop();
+        input.clear();
         println!("{}: command not found", input.trim());
     }
 }
