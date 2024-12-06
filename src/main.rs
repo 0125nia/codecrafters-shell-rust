@@ -9,8 +9,8 @@ fn main() {
     loop {
         initial_display();
         stdin.read_line(&mut input).unwrap();
-        input.clear();
         println!("{}: command not found", input.trim());
+        input.clear();
     }
 }
 
