@@ -1,4 +1,4 @@
-use std::process;
+use std::{env, process};
 
 use crate::utils::path::get_path;
 
@@ -37,6 +37,7 @@ commands_methods! {
         Echo => "echo" => handle_echo,
         Exit => "exit" => handle_exit,
         Type => "type" => handle_type,
+        Pwd => "pwd"=> handle_pwd,
     }
 
 }
@@ -64,5 +65,14 @@ fn match_type_args(arg: &String) {
         } else {
             println!("{}: not found", arg);
         }
+    }
+}
+
+fn handle_pwd(_cmd: &CmdLine) {
+    match env::current_dir() {
+        Ok(path) => {
+            println!("{}", path.display())
+        }
+        _ => {}
     }
 }
