@@ -1,5 +1,7 @@
 use std::process;
 
+use crate::utils::path::get_path;
+
 use super::cmd_line::CmdLine;
 
 macro_rules! commands_methods {
@@ -58,17 +60,9 @@ fn match_type_args(arg: &String) {
         println!("{} is a shell builtin", arg);
     } else {
         if let Some(path) = get_path(arg) {
-            println!("{arg} is {path}/{arg}");
+            println!("{arg} is {path}");
         } else {
             println!("{}: not found", arg);
         }
     }
-}
-
-pub fn get_path(arg: &String) -> Option<String> {
-    let paths = std::env::var("PATH").unwrap();
-    paths
-        .split(':')
-        .find(|&path| std::fs::metadata(format!("{}/{}", path, arg)).is_ok())
-        .map(|path| format!("{}/{}", path, arg))
 }

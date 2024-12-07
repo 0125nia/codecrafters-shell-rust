@@ -1,5 +1,7 @@
 use std::process::Command;
 
+use crate::utils::path::get_path;
+
 #[allow(unused)]
 pub struct CmdLine {
     command: String,
@@ -40,7 +42,7 @@ impl CmdLine {
     }
 
     fn execute_external(&self, cmd: &String) {
-        let path = super::commands::get_path(&cmd);
+        let path = get_path(&cmd);
         if let Some(path) = path {
             if Command::new(path).args(&self.arguments).status().is_err() {
                 println!("{} execute error", cmd)
