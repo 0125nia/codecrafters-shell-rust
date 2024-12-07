@@ -1,4 +1,6 @@
-use std::{env, process};
+use std::{env, path::Path, process};
+
+use home::home_dir;
 
 use crate::utils::path::get_path;
 
@@ -38,6 +40,7 @@ commands_methods! {
         Exit => "exit" => handle_exit,
         Type => "type" => handle_type,
         Pwd => "pwd"=> handle_pwd,
+        Cd => "cd" => handle_cd,
     }
 
 }
@@ -75,4 +78,13 @@ fn handle_pwd(_cmd: &CmdLine) {
         }
         _ => {}
     }
+}
+
+fn handle_cd(cmd: &CmdLine) {
+    let arg = cmd.arguments().get(0);
+    let dir = match arg {
+        Some(path) if path != "~" => Path::new(arg.unwrap()),
+        Some(_) | None => &home_dir().unwrap(),
+    };
+    let _ = env::set_current_dir(dir);
 }

@@ -25,7 +25,7 @@ impl CmdLine {
         &self.command
     }
 
-    pub fn arguments(&self) -> &[String] {
+    pub fn arguments(&self) -> &Vec<String> {
         &self.arguments
     }
 }
