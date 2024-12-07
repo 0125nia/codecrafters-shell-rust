@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-use codecrafters_shell::core::cmd_line::CmdLine;
+use codecrafters_shell::{core::cmd_line::CmdLine, utils::parse::parse_commands};
 
 fn main() {
     // Wait for user input
@@ -12,7 +12,11 @@ fn main() {
         input.clear();
         stdin.read_line(&mut input).unwrap();
 
-        CmdLine::build(input.as_str()).and_then(|cmd_line| {
+        let commands = parse_commands(&input);
+        if commands.is_empty() {
+            continue;
+        }
+        CmdLine::build(commands).and_then(|cmd_line| {
             cmd_line.execute();
             Some(())
         });
