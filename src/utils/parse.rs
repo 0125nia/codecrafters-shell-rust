@@ -8,6 +8,9 @@ pub fn parse_commands(line: &str) -> Vec<String> {
 
     for ch in chars {
         if escaping {
+            if ch.is_alphanumeric() && in_double_quote {
+                current_token.push('\\');
+            }
             // 如果前一个字符是反斜杠，跳过转义，当前字符加入到token中
             current_token.push(ch);
             escaping = false;
