@@ -1,5 +1,6 @@
 use std::process::Command;
 
+use crate::core::commands::Commands;
 use crate::utils::path::get_path;
 
 #[allow(unused)]
@@ -34,7 +35,7 @@ impl CmdLine {
 impl CmdLine {
     pub fn execute(&self) {
         let cmd = self.command.to_lowercase();
-        if let Some(command) = super::commands::Commands::from_str(cmd.as_str()) {
+        if let Some(command) = Commands::from_str(cmd.as_str()) {
             command.execute(self);
         } else {
             self.execute_external(&cmd);
