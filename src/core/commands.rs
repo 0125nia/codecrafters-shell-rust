@@ -86,5 +86,7 @@ fn handle_cd(cmd: &CmdLine) {
         Some(path) if path != "~" => Path::new(arg.unwrap()),
         Some(_) | None => &home_dir().unwrap(),
     };
-    let _ = env::set_current_dir(dir);
+    if let Err(_) = env::set_current_dir(dir) {
+        println!("{}: No such file or directory", arg.unwrap());
+    }
 }
