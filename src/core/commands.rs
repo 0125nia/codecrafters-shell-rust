@@ -49,10 +49,22 @@ fn handle_exit(_cmd: &CmdLine) {
 
 fn handle_type(cmd: &CmdLine) {
     cmd.arguments().get(0).map(|arg| {
-        if Commands::commands().contains(&arg.as_str()) {
-            println!("{} is a shell builtin", arg);
+        match_type_args(arg);
+    });
+}
+
+fn match_type_args(arg: &String) {
+    if Commands::commands().contains(&arg.as_str()) {
+        println!("{} is a shell builtin", arg);
+    } else {
+        let paths = std::env::var("PATH").unwrap();
+        if let Some(path) = paths
+            .split(":")
+            .find(|&path| std::fs::metadata(format!("{}/{}", path, arg)).is_ok())
+        {
+            println!("{arg} is {path}/{arg}");
         } else {
             println!("{}: not found", arg);
         }
-    });
+    }
 }
