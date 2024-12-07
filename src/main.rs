@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-use codecrafters_shell::CmdLine;
+use codecrafters_shell::core::cmd_line::CmdLine;
 
 fn main() {
     // Wait for user input
