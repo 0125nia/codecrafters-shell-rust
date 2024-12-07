@@ -42,5 +42,11 @@ pub fn parse_commands(line: &str) -> Vec<String> {
         result.push(current_token);
     }
 
+    result.iter_mut().for_each(|token| {
+        if token.starts_with('\'') && token.ends_with('\'') && token.len() > 1 {
+            token.remove(0); // 去掉开始的单引号
+            token.pop(); // 去掉结束的单引号
+        }
+    });
     result
 }
